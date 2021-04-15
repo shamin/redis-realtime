@@ -1,0 +1,7 @@
+{
+  "name": "redis-realtime",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}
