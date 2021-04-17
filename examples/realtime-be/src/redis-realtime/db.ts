@@ -1,3 +1,3 @@
-export const subscribeDb = async (name: string) => {
+export const subscribeToDb = async (name: string) => {
   return 'someId'
 }

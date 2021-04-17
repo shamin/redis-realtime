@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import createApp from './core/app'
 import http from 'http'
+import redisRealtime from './redis-realtime'
 
 dotenv.config()
 
@@ -12,6 +13,8 @@ const startApp = async () => {
     app.set('port', port)
 
     const server = http.createServer(app)
+
+    redisRealtime(server, { name: 'user' })
 
     server.listen(app.get('port'), () => {
       console.log(`Server Running at http://localhost:${port}`)

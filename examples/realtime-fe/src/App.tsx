@@ -1,46 +1,12 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import { Button } from '@chakra-ui/react'
+import React from 'react'
+import { useSocket } from './redisRealtime/socket'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <Button onClick={() => setCount((count) => count + 1)} colorScheme="blue">
-            count is: {count}
-          </Button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+  const onNewData = (...args: any) => {
+    console.log(args)
+  }
+  const { updateDb } = useSocket('ws://localhost:5000', onNewData)
+  return <div className="App">Hello</div>
 }
 
 export default App

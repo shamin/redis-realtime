@@ -7,8 +7,6 @@ const createApp = async () => {
   app.use(express.urlencoded({ extended: true }))
   app.use(express.json())
 
-  app.use(express.static('frontend/dist'))
-
   app.use('/', router)
 
   return app
