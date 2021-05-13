@@ -1,8 +1,10 @@
 import redis from 'redis'
 import { promisify } from 'util'
 import { isEmpty, omit } from 'lodash'
+import { addReJSONModule } from './modules'
 const REDIS_SERVER = 'redis://localhost:6379'
 
+addReJSONModule(redis)
 type CallbackFunction = (message: string) => void
 
 const connections: {
@@ -58,5 +60,10 @@ export const getAsync = promisify(redisClient.get).bind(redisClient)
 export const lrangeAsync = promisify(redisClient.lrange).bind(redisClient)
 export const rpushAsync = promisify(redisClient.rpush).bind(redisClient)
 export const lremAsync = promisify(redisClient.lrem).bind(redisClient)
+
+// @ts-ignore
+export const setJson = promisify(redisClient.json_set).bind(redisClient)
+// @ts-ignore
+export const getJson = promisify(redisClient.json_get).bind(redisClient)
 
 export default redisClient
