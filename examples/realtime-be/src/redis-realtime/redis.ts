@@ -1,28 +1,43 @@
 import redis from 'redis'
 import { promisify } from 'util'
+import { isEmpty, omit } from 'lodash'
 const REDIS_SERVER = 'redis://localhost:6379'
 
-const connections = new Map<string, (message: string) => void>()
+type CallbackFunction = (message: string) => void
+
+const connections: {
+  [dbName: string]: {
+    [id: string]: CallbackFunction
+  }
+} = {}
 
 const subscriber = redis.createClient(REDIS_SERVER)
 const publisher = redis.createClient(REDIS_SERVER)
 
 export const subscribe = (
   subscriptionName: string,
+  subscriptionId: string,
   callback: (message: string) => void
 ) => {
-  connections.set(subscriptionName, callback)
-  subscriber.subscribe(subscriptionName)
+  connections[subscriptionName] = {
+    ...connections[subscriptionName],
+    [subscriptionId]: callback,
+  }
+  if (Object.keys(connections[subscriptionName]).length === 1) {
+    subscriber.subscribe(subscriptionName)
+  }
 }
 
 subscriber.on('message', function (channel, message) {
-  const callback = connections.get(channel)
-  callback(message)
+  const callbacks = connections[channel]
+  Object.values(callbacks).forEach((c) => c(message))
 })
 
-export const unsubscribe = (subscriptionName: string) => {
-  connections.delete(subscriptionName)
-  subscriber.unsubscribe(subscriptionName)
+export const unsubscribe = (subscriptionName: string, subscriptionId: string) => {
+  connections[subscriptionName] = omit(connections[subscriptionName], subscriptionId)
+  if (isEmpty(connections)) {
+    subscriber.unsubscribe(subscriptionName)
+  }
 }
 
 export const publish = (subscriptionName: string, message: string) => {

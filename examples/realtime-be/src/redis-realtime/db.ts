@@ -5,7 +5,7 @@ export const subscribeToDb = (
   pathName: string,
   callback: (message: string) => void
 ) => {
-  subscribe(`db${pathName}`, (message: string) => {
+  subscribe(`db${pathName}`, id, (message: string) => {
     callback(message)
   })
 }
