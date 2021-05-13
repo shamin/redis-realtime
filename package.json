@@ -1,7 +1,10 @@
 {
   "name": "redis-realtime",
   "private": true,
-  "devDependencies": {
-    "lerna": "^3.22.1"
-  }
+  "workspaces": [
+    "examples/realtime-be",
+    "examples/realtime-fe",
+    "examples/redis-realtime-client",
+    "examples/redis-realtime-node"
+  ]
 }
