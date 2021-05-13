@@ -45,4 +45,3 @@ export const rpushAsync = promisify(redisClient.rpush).bind(redisClient)
 export const lremAsync = promisify(redisClient.lrem).bind(redisClient)
 
 export default redisClient
-

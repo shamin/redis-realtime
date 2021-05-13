@@ -48,7 +48,12 @@ export const useSocket = (
   }, [ws?.current?.readyState])
 
   const updateDb = (message: string) => {
-    ws?.current?.send(message)
+    ws?.current?.send(
+      JSON.stringify({
+        type: 'DB_UPSERT',
+        message,
+      })
+    )
   }
 
   return {

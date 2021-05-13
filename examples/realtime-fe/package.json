@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.1.5",
     "@shamin/redis-realtime-client": "file:../../packages/redis-realtime-client",
     "framer-motion": "^4.1.2",
+    "lodash": "^4.17.21",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router": "^5.2.0",
