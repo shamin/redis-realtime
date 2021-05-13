@@ -1,14 +1,11 @@
-import http from 'http'
-import WebSocket from 'ws'
+import * as http from 'http'
+import * as WebSocket from 'ws'
 import { connectClient } from './core/socket'
 import { ConnectionDetails } from './core/socket/types'
 import { publishToDb, subscribeToDb } from './db'
 import logger from './logger'
 
-const serverConnectionCallback = (
-  ws: WebSocket,
-  { id, db }: ConnectionDetails
-) => {
+const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) => {
   const sendJSON = (message: any) => {
     ws.send(JSON.stringify(message))
   }
@@ -34,9 +31,8 @@ const serverConnectionCallback = (
 }
 
 const redisRealtime = (server: http.Server, db: string) => {
-  logger.debug(`New connection intiating`)
-  
   server.on('upgrade', async function (...args) {
+    logger.debug(`New connection intiating`)
     const socketServer = connectClient(args, db)
     socketServer.on('connection', serverConnectionCallback)
   })

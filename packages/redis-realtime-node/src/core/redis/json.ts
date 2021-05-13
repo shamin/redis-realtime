@@ -1,4 +1,5 @@
-import redis from 'redis'
+import * as redis from 'redis'
+import { promisify } from 'util'
 import { REDIS_SERVER_URL } from './config'
 
 const redisClient = redis.createClient(REDIS_SERVER_URL)

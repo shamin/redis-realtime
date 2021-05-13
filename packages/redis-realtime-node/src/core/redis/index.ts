@@ -1,4 +1,4 @@
-import redis from 'redis'
+import * as redis from 'redis'
 import { addReJSONModule } from './modules'
 
 addReJSONModule(redis)

@@ -1,4 +1,4 @@
-import redis from 'redis'
+import * as redis from 'redis'
 import { CallbackFunction } from './types'
 import { isEmpty, omit } from 'lodash'
 import { REDIS_SERVER_URL } from './config'
