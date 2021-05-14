@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from 'react'
+import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { dbReducer } from './db'
 import { useSocket } from './socket'
 
@@ -7,7 +7,7 @@ type Publish = (key: string) => { setDb: (data: any) => void }
 interface RealtimeContextType {
   db: string
   publisher: Publish
-  state: any,
+  state: any
   subscribe: (key: string) => any
 }
 
@@ -31,7 +31,7 @@ export const RealtimeProvider = ({
   token,
   secure = true,
 }: RealtimeProviderProps) => {
-  const [dbState, dispatch] = useReducer(dbReducer, {})
+  const [dbState, dispatch] = useReducer(dbReducer, { connectionId: undefined })
 
   const onNewData = (data: any) => {
     dispatch(data)
@@ -42,6 +42,15 @@ export const RealtimeProvider = ({
     onNewData,
     token
   )
+
+  useEffect(() => {
+    if (dbState.connectionId) {
+      sendMessage({
+        type: 'DB_INITIALISE',
+        key: 'list',
+      })
+    }
+  }, [dbState.connectionId])
 
   const publisher: Publish = (key: string) => ({
     setDb: (data: any) => {
