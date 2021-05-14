@@ -48,6 +48,7 @@ export const RealtimeProvider = ({
       sendMessage({
         type: 'DB_INITIALISE',
         key: 'list',
+        id: dbState.connectionId,
       })
     }
   }, [dbState.connectionId])
@@ -55,6 +56,12 @@ export const RealtimeProvider = ({
   const publisher: Publish = (key: string) => ({
     setDb: (data: any) => {
       sendMessage({
+        type: 'DB_SET',
+        key,
+        data,
+        id: dbState.connectionId,
+      })
+      dispatch({
         type: 'DB_SET',
         key,
         data,

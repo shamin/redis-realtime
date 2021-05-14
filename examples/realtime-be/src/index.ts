@@ -17,7 +17,7 @@ const startApp = async () => {
     redisRealtime(server, 'todos')
 
     server.listen(app.get('port'), () => {
-      console.log(`Server Running at http://localhost:${port}`)
+      console.log(`Server Runnig at http://localhost:${port}`)
     })
   } catch (error) {
     console.error(`Error occured ${error}`)

@@ -1,23 +1,24 @@
 import React from 'react'
-import { useRealtime } from '@shamin/redis-realtime-client'
-import { Textarea, Container } from '@chakra-ui/react'
+import { Container, Box, HStack, Icon, VStack, Text } from '@chakra-ui/react'
+import { FcDocument } from 'react-icons/fc'
 
 function App() {
-  const { publisher, subscribe } = useRealtime()
-  const { setDb } = publisher('list')
-  const listValue = subscribe('list')
-
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDb(e.target.value)
-  }
-
   return (
     <Container>
-      <Textarea
-        value={listValue}
-        placeholder="Type something here"
-        onChange={onChange}
-      />
+      <VStack>
+        <Box boxShadow="xs" p="6" rounded="md" bg="white" w="100%">
+          <HStack>
+            <Icon as={FcDocument} w={10} h={10} />
+            <Text>My document name</Text>
+          </HStack>
+        </Box>
+        <Box boxShadow="xs" p="6" rounded="md" bg="white" w="100%">
+          <HStack>
+            <Icon as={FcDocument} w={10} h={10} />
+            <Text>My document name</Text>
+          </HStack>
+        </Box>
+      </VStack>
     </Container>
   )
 }

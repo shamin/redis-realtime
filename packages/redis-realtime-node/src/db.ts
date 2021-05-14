@@ -7,7 +7,10 @@ export const subscribeToDb = (
   callback: (message: string) => void
 ) => {
   subscribe(`db/${db}`, id, (message: string) => {
-    callback(message)
+    const data = JSON.parse(message)
+    if (data.id !== id) {
+      callback(message)
+    }
   })
 }
 
