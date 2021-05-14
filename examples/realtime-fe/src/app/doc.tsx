@@ -3,15 +3,18 @@ import { Center } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
 import { css } from '@emotion/react'
 import { useRealtime } from '@shamin/redis-realtime-client'
+import { RawDraftContentState } from 'draft-js'
 import React from 'react'
+import { useParams } from 'react-router'
 import DocEditor from '../components/editor'
 
 interface DocProps {}
 
 const Doc: React.FC<DocProps> = () => {
+  const { id } = useParams<{ id: string }>()
   const { publisher, subscribe } = useRealtime()
-  const { setDb } = publisher('list')
-  const { data: content, isLoading } = subscribe('list')
+  const { setDb } = publisher<RawDraftContentState>(`doc${id}`)
+  const { data, isLoading } = subscribe<RawDraftContentState>(`doc${id}`)
 
   return (
     <Container
@@ -27,7 +30,7 @@ const Doc: React.FC<DocProps> = () => {
           <Spinner />
         </Center>
       ) : (
-        <DocEditor content={content} onChange={setDb} />
+        <DocEditor content={data} onChange={setDb} />
       )}
     </Container>
   )

@@ -1,4 +1,5 @@
 import { getJson, publish, setJson, subscribe } from './core/redis'
+import { insertArrayJSON } from './core/redis/json'
 import logger from './logger'
 
 export const subscribeToDb = (
@@ -16,21 +17,43 @@ export const subscribeToDb = (
 
 export const publishToDb = async (db: string, message: DbData) => {
   publish(`db/${db}`, JSON.stringify(message))
-  await writeToDb(db, message.key, message.data)
+  await writeToDb(db, message.type, message.key, message.data)
 }
 
-export const writeToDb = (db: string, key: string, value: any) => {
-  return setJson(db, `.${key}`, JSON.stringify(value))
+export const writeToDb = async (
+  db: string,
+  type: DbData['type'],
+  key: string,
+  value: any
+) => {
+  console.log('Write', db, type, key, value)
+  switch (type) {
+    case 'DB_ARRAY_INSERT':
+      await createDbPathIfNotExists(db, key, '[]')
+      return insertArrayJSON(db, `.${key}`, 0, JSON.stringify(value))
+    case 'DB_SET':
+      return setJson(db, `.${key}`, JSON.stringify(value))
+  }
 }
 
 export const readDb = (db: string, key: string) => {
   return getJson(db, `.${key}`)
 }
 
-export const createDbIfNotExists = async (db: string) => {
-  if (!(await readDb(db, ''))) {
-    await setJson(db, '.', `{}`)
-    logger.debug(`Database ${db} was created as it didn't exist`)
+export const createDbPathIfNotExists = async (
+  db: string,
+  path: string = '',
+  defaultValue = '{}'
+) => {
+  let isExist = false
+  try {
+    if (await readDb(db, `${path}`)) {
+      isExist = true
+    }
+  } catch (err) {}
+
+  if (!isExist) {
+    await setJson(db, `.${path}`, defaultValue)
   }
 }
 

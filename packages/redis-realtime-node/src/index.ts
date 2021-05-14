@@ -3,7 +3,7 @@ import * as WebSocket from 'ws'
 import { connectClient, socketServer } from './core/socket'
 import { ConnectionDetails } from './core/socket/types'
 import {
-  createDbIfNotExists,
+  createDbPathIfNotExists,
   publishToDb,
   readDb,
   readDbKeys,
@@ -26,13 +26,6 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
   ws.on('message', async function (message: any) {
     try {
       const data: DbData = JSON.parse(message)
-      if (data.type === 'DB_SET') {
-        try {
-          await publishToDb(db, data)
-        } catch (err) {
-          console.log('Pubish:', err)
-        }
-      }
       if (data.type === 'DB_INITIALISE') {
         let details = {}
         try {
@@ -43,6 +36,12 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
           keys: data.keys,
           datas: details,
         })
+      } else if (['DB_SET', 'DB_ARRAY_INSERT'].includes(data.type)) {
+        try {
+          await publishToDb(db, data)
+        } catch (err) {
+          console.log('Pubish:', err)
+        }
       }
     } catch (err) {
       console.log(`Error processing webhook message from ${id}`, err)
@@ -53,7 +52,7 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
 socketServer.on('connection', serverConnectionCallback)
 
 const redisRealtime = (server: http.Server, db: string) => {
-  createDbIfNotExists(db).then(() => {})
+  createDbPathIfNotExists(db).then(() => {})
   server.on('upgrade', async function (...args) {
     logger.debug(`New connection intiating`)
     connectClient(args, db)

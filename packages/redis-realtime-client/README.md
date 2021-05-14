@@ -30,8 +30,8 @@ function Root() {
 }
 ```
 
-| Props   | Description                                                        | Default |
-| ------- | ------------------------------------------------------------------ | ------- |
+| Props     | Description                                                        | Default |
+| --------- | ------------------------------------------------------------------ | ------- |
 | `baseUrl` | Base url of the domain where backend is hosted (without protocols) | nil     |
 | `db`      | Database name that is to be connected                              | nil     |
 | `secure`  | Whether the web socket connection is secure                        | true    |
@@ -46,28 +46,33 @@ import { useRealtime } from '@shamin/redis-realtime-client'
 
 function App() {
   const { publisher, subscribe } = useRealtime()
-  const { setDb } = publisher('list')
-  const listValue = subscribe('list')
+  const { setDb } = publisher('text')
+  const textValue = subscribe('text')
 
   const onChange = (e) => {
     setDb(e.target.value)
   }
 
   return (
-    <input value={listValue} placeholder="Type something here" onChange={onChange} />
+    <input value={textValue} placeholder="Type something here" onChange={onChange} />
   )
 }
 ```
 
-| Parameters    | Description                      |
-| ------------- | -------------------------------- |
-| `publisher`   | Create a publish for a key in db |
-| `subscribe`   | Create a subscriber for a key in db |
+| Parameters  | Description                         |
+| ----------- | ----------------------------------- |
+| `publisher` | Create a publish for a key in db    |
+| `subscribe` | Create a subscriber for a key in db |
 
-##### Publisher Functions
+##### `Publisher` Parameters
 
-| Parameters    | Description                      |
-| ------------- | -------------------------------- |
-| `setDb`   | Similar to set json in redis it sets the value of publisher key |
+| Parameters | Description                                                     |
+| ---------- | --------------------------------------------------------------- |
+| `setDb`    | Similar to set json in redis it sets the value of publisher key |
 
+##### `Subscriber` Parameters
 
+| Parameters  | Description                       |
+| ----------- | --------------------------------- |
+| `data`      | Value of the key in redis db      |
+| `isLoading` | Whether the value is being loaded |

@@ -12,12 +12,23 @@ import {
   Input,
   ModalFooter,
 } from '@chakra-ui/react'
-import React from 'react'
+import { useRealtime } from '@shamin/redis-realtime-client'
+import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 interface NewDocProps {}
 
 const NewDoc: React.FC<NewDocProps> = (props: NewDocProps) => {
+  const [name, setName] = useState('')
+  const { publisher } = useRealtime()
+  const { arrayInsertDb } = publisher(`documents`)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const createDoc = () => {
+    arrayInsertDb({ id: uuidv4(), name, date: new Date() })
+    onClose()
+  }
 
   return (
     <>
@@ -32,12 +43,15 @@ const NewDoc: React.FC<NewDocProps> = (props: NewDocProps) => {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>Doc name</FormLabel>
-              <Input placeholder="Enter the name" />
+              <Input
+                placeholder="Enter the name"
+                onChange={(e) => setName(e.target.value)}
+              />
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Save
+            <Button colorScheme="blue" mr={3} onClick={createDoc}>
+              Create
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

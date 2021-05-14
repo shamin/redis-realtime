@@ -2,13 +2,23 @@ import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { dbReducer, DB_KEY_STATUS } from './db'
 import { useSocket } from './socket'
 
-type Publish = (key: string) => { setDb: (data: any) => void }
+type Publish = <T extends unknown>(
+  key: string
+) => {
+  setDb: (data: T) => void
+  arrayInsertDb: (data: any) => void
+}
 
 interface RealtimeContextType {
   db: string
   publisher: Publish
   state: any
-  subscribe: (key: string) => any
+  subscribe: <T extends unknown>(
+    key: string
+  ) => {
+    isLoading: boolean
+    data: T
+  }
 }
 
 const RealtimeContext = React.createContext<RealtimeContextType>(
@@ -62,7 +72,7 @@ export const RealtimeProvider = ({
   }, [dbState.connectionId, subscriptions])
 
   const publisher: Publish = (key: string) => ({
-    setDb: (data: any) => {
+    setDb: (data) => {
       sendMessage({
         type: 'DB_SET',
         key,
@@ -71,6 +81,19 @@ export const RealtimeProvider = ({
       })
       dispatch({
         type: 'DB_SET',
+        key,
+        data,
+      })
+    },
+    arrayInsertDb: (data) => {
+      sendMessage({
+        type: 'DB_ARRAY_INSERT',
+        key,
+        data,
+        id: dbState.connectionId,
+      })
+      dispatch({
+        type: 'DB_ARRAY_INSERT',
         key,
         data,
       })

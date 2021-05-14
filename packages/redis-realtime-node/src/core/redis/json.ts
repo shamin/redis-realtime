@@ -8,3 +8,5 @@ const redisClient = redis.createClient(REDIS_SERVER_URL)
 export const setJson = promisify(redisClient.json_set).bind(redisClient)
 // @ts-ignore
 export const getJson = promisify(redisClient.json_get).bind(redisClient)
+// @ts-ignore
+export const insertArrayJSON = promisify(redisClient.json_arrinsert).bind(redisClient)

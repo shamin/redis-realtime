@@ -1,4 +1,8 @@
-type DbDataTypes = 'HANDSHAKE_SUCCESS' | 'DB_SET'  | 'DB_INITIALISE'
+type DbDataTypes =
+  | 'HANDSHAKE_SUCCESS'
+  | 'DB_SET'
+  | 'DB_INITIALISE'
+  | 'DB_ARRAY_INSERT'
 
 interface DbData {
   type: DbDataTypes
