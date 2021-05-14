@@ -14,7 +14,7 @@ const startApp = async () => {
 
     const server = http.createServer(app)
 
-    redisRealtime(server, 'text')
+    redisRealtime(server, 'todos')
 
     server.listen(app.get('port'), () => {
       console.log(`Server Running at http://localhost:${port}`)
