@@ -1,18 +1,23 @@
 import React from 'react'
-import { useSocket } from '../redisRealtime/socket'
+import { useRealtime } from '@shamin/redis-realtime-client'
 import { Textarea, Container } from '@chakra-ui/react'
 
 function App() {
-  // const onNewData = (...args: any) => {
-  //   console.log(args)
-  // }
-  // const { updateDb } = useSocket('ws://localhost:5000/text', onNewData)
+  const { publisher, subscribe } = useRealtime()
+  const { setDb } = publisher('list')
+  const listValue = subscribe('list')
+
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //   updateDb(e.target.value)
+    setDb(e.target.value)
   }
+
   return (
     <Container>
-      <Textarea placeholder="Type something here" onChange={onChange} />
+      <Textarea
+        value={listValue}
+        placeholder="Type something here"
+        onChange={onChange}
+      />
     </Container>
   )
 }

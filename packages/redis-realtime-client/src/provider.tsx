@@ -1,9 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useReducer, useState } from 'react'
+import { dbReducer } from './db'
 import { useSocket } from './socket'
+
+type Publish = (key: string) => { setDb: (data: any) => void }
 
 interface RealtimeContextType {
   db: string
-  updateDb: (data: any) => void
+  publisher: Publish
+  state: any,
+  subscribe: (key: string) => any
 }
 
 const RealtimeContext = React.createContext<RealtimeContextType>(
@@ -24,27 +29,38 @@ export const RealtimeProvider = ({
   baseUrl,
   db,
   token,
-  secure = true
+  secure = true,
 }: RealtimeProviderProps) => {
-  const [dbState, setDbState] = useState({})
+  const [dbState, dispatch] = useReducer(dbReducer, {})
 
   const onNewData = (data: any) => {
-    setDbState(data)
+    dispatch(data)
   }
 
-  const { sendMessage } = useSocket(`${secure ? 'wss' : 'ws'}://${baseUrl}/${db}`, onNewData, token)
+  const { sendMessage } = useSocket(
+    `${secure ? 'wss' : 'ws'}://${baseUrl}/${db}`,
+    onNewData,
+    token
+  )
 
-  const updateDb = (data: any) => {
-    sendMessage({
-      type: 'DB_UPSERT',
-      data,
-    })
-  }
+  const publisher: Publish = (key: string) => ({
+    setDb: (data: any) => {
+      sendMessage({
+        type: 'DB_SET',
+        key,
+        data,
+      })
+    },
+  })
+
+  const subscribe = (key: string) => dbState[key]
 
   const contextValue = React.useMemo(
     () => ({
       db,
-      updateDb,
+      publisher,
+      state: dbState,
+      subscribe,
     }),
     [sendMessage]
   )
