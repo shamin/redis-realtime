@@ -1,7 +1,7 @@
-type DbDataTypes = 'HANDSHAKE_SUCCESS' | 'DB_UPSERT'
+type DbDataTypes = 'HANDSHAKE_SUCCESS' | 'DB_SET'
 
 interface DbData {
   type: DbDataTypes
   id: string
-  message: any
+  data: any
 }

@@ -10,7 +10,7 @@ export const subscribeToDb = (
   })
 }
 
-export const publishToDb = (db: string, message: string) => {
+export const publishToDb = (db: string, message: DbData) => {
   publish(`db/${db}`, JSON.stringify(message))
 }
 

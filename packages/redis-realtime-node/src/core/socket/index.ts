@@ -1,7 +1,7 @@
 import * as WebSocket from 'ws'
 import { v4 as uuidv4 } from 'uuid'
 
-const socketServer = new WebSocket.Server({
+export const socketServer = new WebSocket.Server({
   noServer: true,
 })
 
@@ -16,6 +16,4 @@ export const connectClient = ([request, socket, head]: any, db: string) => {
   socketServer.handleUpgrade(request, socket, head, function (ws) {
     socketServer.emit('connection', ws, { id: connectionId, db })
   })
-
-  return socketServer;
 }
