@@ -2,7 +2,13 @@ import * as http from 'http'
 import * as WebSocket from 'ws'
 import { connectClient, socketServer } from './core/socket'
 import { ConnectionDetails } from './core/socket/types'
-import { createDbIfNotExists, publishToDb, readDb, subscribeToDb } from './db'
+import {
+  createDbIfNotExists,
+  publishToDb,
+  readDb,
+  readDbKeys,
+  subscribeToDb,
+} from './db'
 import logger from './logger'
 
 const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) => {
@@ -24,18 +30,18 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
         try {
           await publishToDb(db, data)
         } catch (err) {
-          console.log('Pub;ish:', err)
+          console.log('Pubish:', err)
         }
       }
       if (data.type === 'DB_INITIALISE') {
-        let details
+        let details = {}
         try {
-          details = await readDb(db, data.key)
+          details = await readDbKeys(db, data.keys)
         } catch (err) {}
         sendJSON({
           type: 'DB_INITIALISE',
-          key: data.key,
-          data: JSON.parse(details),
+          keys: data.keys,
+          datas: details,
         })
       }
     } catch (err) {
@@ -47,8 +53,7 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
 socketServer.on('connection', serverConnectionCallback)
 
 const redisRealtime = (server: http.Server, db: string) => {
-  createDbIfNotExists(db).then(() => {
-  })
+  createDbIfNotExists(db).then(() => {})
   server.on('upgrade', async function (...args) {
     logger.debug(`New connection intiating`)
     connectClient(args, db)

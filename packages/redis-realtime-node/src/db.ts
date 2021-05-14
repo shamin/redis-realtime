@@ -33,3 +33,13 @@ export const createDbIfNotExists = async (db: string) => {
     logger.debug(`Database ${db} was created as it didn't exist`)
   }
 }
+
+export const readDbKeys = (db: string, keys: string[]) => {
+  return keys.reduce<any>(async (acc, key) => {
+    const data = await readDb(db, key)
+    return {
+      ...acc,
+      [key]: JSON.parse(data),
+    }
+  }, {})
+}

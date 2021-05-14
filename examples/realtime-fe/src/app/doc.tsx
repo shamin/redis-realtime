@@ -1,4 +1,6 @@
 import { Container } from '@chakra-ui/layout'
+import { Center } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/spinner'
 import { css } from '@emotion/react'
 import { useRealtime } from '@shamin/redis-realtime-client'
 import React from 'react'
@@ -9,7 +11,7 @@ interface DocProps {}
 const Doc: React.FC<DocProps> = () => {
   const { publisher, subscribe } = useRealtime()
   const { setDb } = publisher('list')
-  const content = subscribe('list')
+  const { data: content, isLoading } = subscribe('list')
 
   return (
     <Container
@@ -20,7 +22,13 @@ const Doc: React.FC<DocProps> = () => {
         }
       `}
     >
-      <DocEditor content={content} onChange={setDb} />
+      {isLoading ? (
+        <Center>
+          <Spinner />
+        </Center>
+      ) : (
+        <DocEditor content={content} onChange={setDb} />
+      )}
     </Container>
   )
 }

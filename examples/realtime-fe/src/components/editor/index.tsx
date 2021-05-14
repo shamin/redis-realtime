@@ -31,8 +31,6 @@ const DocEditor: React.FC<DocProps> = ({ content, onChange }: DocProps) => {
     }
   }, [content])
 
-  console.log(editorState)
-
   return (
     <Container
       css={css`

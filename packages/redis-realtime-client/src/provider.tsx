@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react'
-import { dbReducer } from './db'
+import { dbReducer, DB_KEY_STATUS } from './db'
 import { useSocket } from './socket'
 
 type Publish = (key: string) => { setDb: (data: any) => void }
@@ -32,6 +32,7 @@ export const RealtimeProvider = ({
   secure = true,
 }: RealtimeProviderProps) => {
   const [dbState, dispatch] = useReducer(dbReducer, { connectionId: undefined })
+  const subscriptions: string[] = []
 
   const onNewData = (data: any) => {
     dispatch(data)
@@ -44,14 +45,21 @@ export const RealtimeProvider = ({
   )
 
   useEffect(() => {
-    if (dbState.connectionId) {
+    const unintialisedKeys = subscriptions.filter((s) => {
+      return !dbState[s]?.status
+    })
+    if (unintialisedKeys.length > 0 && dbState.connectionId) {
+      dispatch({
+        type: 'DB_INITIALISING',
+        keys: unintialisedKeys,
+      })
       sendMessage({
         type: 'DB_INITIALISE',
-        key: 'list',
+        keys: unintialisedKeys,
         id: dbState.connectionId,
       })
     }
-  }, [dbState.connectionId])
+  }, [dbState.connectionId, subscriptions])
 
   const publisher: Publish = (key: string) => ({
     setDb: (data: any) => {
@@ -69,7 +77,15 @@ export const RealtimeProvider = ({
     },
   })
 
-  const subscribe = (key: string) => dbState[key]
+  const subscribe = (key: string) => {
+    if (!subscriptions.includes(key)) {
+      subscriptions.push(key)
+    }
+    return {
+      isLoading: dbState[key]?.status === DB_KEY_STATUS.isLoading,
+      data: dbState[key]?.data,
+    }
+  }
 
   const contextValue = React.useMemo(
     () => ({

@@ -4,5 +4,6 @@ interface DbData {
   type: DbDataTypes
   id: string
   key: string
+  keys: string[]
   data: any
 }
