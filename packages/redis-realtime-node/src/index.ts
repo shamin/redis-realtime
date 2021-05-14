@@ -14,7 +14,6 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
   sendJSON({ type: 'HANDSHAKE_SUCCESS', id, db })
 
   subscribeToDb(id, db, function (message) {
-    console.log('New message', message)
     ws.send(message)
   })
 
