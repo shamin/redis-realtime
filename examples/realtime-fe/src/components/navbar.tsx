@@ -1,18 +1,21 @@
-import { Container, Heading, HStack, Spacer } from '@chakra-ui/react'
+import { Box, Heading, HStack, Link, Spacer } from '@chakra-ui/react'
 import React from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import NewDoc from './newDoc'
 
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = (props: NavbarProps) => {
   return (
-    <Container pt={4} pb={4}>
+    <Box pt={4} pb={4} w={1200}>
       <HStack>
-        <Heading size="lg">Docs</Heading>
+        <Link as={RouterLink} to="/">
+          <Heading size="lg">Docs</Heading>
+        </Link>
         <Spacer />
         <NewDoc />
       </HStack>
-    </Container>
+    </Box>
   )
 }
 

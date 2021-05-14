@@ -26,13 +26,13 @@ const NewDoc: React.FC<NewDocProps> = (props: NewDocProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const createDoc = () => {
-    arrayInsertDb({ id: uuidv4(), name, date: new Date() })
+    arrayInsertDb({ id: uuidv4().replaceAll('-', ''), name, date: new Date() })
     onClose()
   }
 
   return (
     <>
-      <Button colorScheme="blue" onClick={onOpen}>
+      <Button background="#0052cc" color="#fff" onClick={onOpen}>
         New
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -50,7 +50,7 @@ const NewDoc: React.FC<NewDocProps> = (props: NewDocProps) => {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={createDoc}>
+            <Button background="#0052cc" color="#fff" mr={3} onClick={createDoc}>
               Create
             </Button>
             <Button onClick={onClose}>Cancel</Button>

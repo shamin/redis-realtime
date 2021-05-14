@@ -9,16 +9,19 @@ import {
   Spinner,
   Link,
   Spacer,
+  Box,
 } from '@chakra-ui/react'
 import { FcDocument } from 'react-icons/fc'
 import { RiArrowRightSLine } from 'react-icons/ri'
 import { useRealtime } from '@shamin/redis-realtime-client'
 import NewDoc from '../components/newDoc'
 import { Link as RouterLink } from 'react-router-dom'
+import { getRelativeTime } from '../utils/dates'
 
 interface Document {
   id: string
   name: string
+  date: string
 }
 
 function App() {
@@ -26,15 +29,13 @@ function App() {
   const { data = [], isLoading } = subscribe<Document[]>(`documents`)
   if (isLoading) {
     return (
-      <Container>
-        <Center>
-          <Spinner />
-        </Center>
-      </Container>
+      <Center>
+        <Spinner />
+      </Center>
     )
   }
   return (
-    <Container>
+    <Box w={800}>
       {data.length <= 0 ? (
         <Center mt={16}>
           <VStack spacing={4}>
@@ -59,13 +60,14 @@ function App() {
                 <Icon as={FcDocument} w={10} h={10} />
                 <Text>{d.name}</Text>
                 <Spacer />
+                <Text>{getRelativeTime(d.date)}</Text>
                 <Icon as={RiArrowRightSLine} w={5} h={5} />
               </HStack>
             </Link>
           ))}
         </VStack>
       )}
-    </Container>
+    </Box>
   )
 }
 

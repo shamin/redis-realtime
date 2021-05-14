@@ -32,7 +32,7 @@ export const BlockControls: React.FC<ControlsProps> = ({
     .getType()
 
   return (
-    <HStack>
+    <HStack spacing={0}>
       {BLOCK_TYPES.map((type) => (
         <EditorButton
           key={type.label}
@@ -59,7 +59,7 @@ export const InlineControls: React.FC<ControlsProps> = ({
 }: ControlsProps) => {
   const currentStyle = editorState.getCurrentInlineStyle()
   return (
-    <HStack>
+    <HStack spacing={0}>
       {INLINE_STYLES.map((type) => (
         <EditorButton
           key={type.label}

@@ -32,22 +32,13 @@ const DocEditor: React.FC<DocProps> = ({ content, onChange }: DocProps) => {
   }, [content])
 
   return (
-    <Container
-      css={css`
-        .editor-wrapper {
-          background-color: white;
-          min-height: 500px;
-        }
-      `}
-    >
-      <Editor
-        editorState={editorState}
-        onChange={(v) => {
-          setEditorState(v)
-          onChange(convertToRaw(v.getCurrentContent()))
-        }}
-      />
-    </Container>
+    <Editor
+      editorState={editorState}
+      onChange={(v) => {
+        setEditorState(v)
+        onChange(convertToRaw(v.getCurrentContent()))
+      }}
+    />
   )
 }
 

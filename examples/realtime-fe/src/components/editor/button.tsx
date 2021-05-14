@@ -16,7 +16,9 @@ const EditorButton: React.FC<EditorButtonProps> = ({
 }: EditorButtonProps) => {
   return (
     <Button
-      color={active ? 'red' : 'blue'}
+      color={active ? 'black' : 'gray'}
+      fontSize={14}
+      background="transparent"
       onClick={() => {
         onToggle(style)
       }}

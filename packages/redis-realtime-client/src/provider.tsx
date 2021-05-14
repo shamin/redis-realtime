@@ -42,7 +42,7 @@ export const RealtimeProvider = ({
   secure = true,
 }: RealtimeProviderProps) => {
   const [dbState, dispatch] = useReducer(dbReducer, { connectionId: undefined })
-  const subscriptions: string[] = []
+  const [subscriptions, setSubscriptions] = useState<string[]>([])
 
   const onNewData = (data: any) => {
     dispatch(data)
@@ -54,21 +54,27 @@ export const RealtimeProvider = ({
     token
   )
 
-  useEffect(() => {
-    const unintialisedKeys = subscriptions.filter((s) => {
-      return !dbState[s]?.status
-    })
-    if (unintialisedKeys.length > 0 && dbState.connectionId) {
-      dispatch({
-        type: 'DB_INITIALISING',
-        keys: unintialisedKeys,
+  const initialise = () => {
+    if (dbState.connectionId) {
+      const unintialisedKeys = subscriptions.filter((s) => {
+        return !dbState[s]?.status
       })
-      sendMessage({
-        type: 'DB_INITIALISE',
-        keys: unintialisedKeys,
-        id: dbState.connectionId,
-      })
+      if (unintialisedKeys.length > 0) {
+        dispatch({
+          type: 'DB_INITIALISING',
+          keys: unintialisedKeys,
+        })
+        sendMessage({
+          type: 'DB_INITIALISE',
+          keys: unintialisedKeys,
+          id: dbState.connectionId,
+        })
+      }
     }
+  }
+
+  useEffect(() => {
+    initialise()
   }, [dbState.connectionId, subscriptions])
 
   const publisher: Publish = (key: string) => ({
@@ -101,8 +107,9 @@ export const RealtimeProvider = ({
   })
 
   const subscribe = (key: string) => {
+    console.log('Subscribing...', key)
     if (!subscriptions.includes(key)) {
-      subscriptions.push(key)
+      setSubscriptions([...subscriptions, key])
     }
     return {
       isLoading: dbState[key]?.status === DB_KEY_STATUS.isLoading,

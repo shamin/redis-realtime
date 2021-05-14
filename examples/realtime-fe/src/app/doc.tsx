@@ -1,7 +1,5 @@
-import { Container } from '@chakra-ui/layout'
-import { Center } from '@chakra-ui/react'
+import { Box, Center } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
-import { css } from '@emotion/react'
 import { useRealtime } from '@shamin/redis-realtime-client'
 import { RawDraftContentState } from 'draft-js'
 import React from 'react'
@@ -17,14 +15,7 @@ const Doc: React.FC<DocProps> = () => {
   const { data, isLoading } = subscribe<RawDraftContentState>(`doc${id}`)
 
   return (
-    <Container
-      css={css`
-        .editor-wrapper {
-          background-color: white;
-          min-height: 500px;
-        }
-      `}
-    >
+    <Box width={1200}>
       {isLoading ? (
         <Center>
           <Spinner />
@@ -32,7 +23,7 @@ const Doc: React.FC<DocProps> = () => {
       ) : (
         <DocEditor content={data} onChange={setDb} />
       )}
-    </Container>
+    </Box>
   )
 }
 
