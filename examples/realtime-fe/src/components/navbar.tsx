@@ -1,4 +1,5 @@
-import { Box, Heading, HStack, Link, Spacer, Flex } from '@chakra-ui/react'
+import { Box, Heading, HStack, Link, Spacer, Flex, Badge } from '@chakra-ui/react'
+import { CONNECTION_STATUS, useRealtime } from '@space-kit/redis-realtime-react'
 import React from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import NewDoc from './newDoc'
@@ -6,6 +7,7 @@ import NewDoc from './newDoc'
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
+  const { connectionStatus } = useRealtime()
   return (
     <Flex
       w="100%"
@@ -20,6 +22,16 @@ const Navbar: React.FC<NavbarProps> = () => {
           <Link as={RouterLink} to="/">
             <Heading size="lg">Docs</Heading>
           </Link>
+          <Spacer />
+          {connectionStatus === CONNECTION_STATUS.open && (
+            <Badge colorScheme="green">Connected</Badge>
+          )}
+          {connectionStatus === CONNECTION_STATUS.closed && (
+            <Badge colorScheme="red">Disconnected</Badge>
+          )}
+          {connectionStatus === CONNECTION_STATUS.connecting && (
+            <Badge colorScheme="purple">Connecting</Badge>
+          )}
           <Spacer />
           <NewDoc />
         </HStack>

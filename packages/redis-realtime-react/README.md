@@ -5,7 +5,7 @@ Redis realtime react client
 ## Installation
 
 ```sh
-npm install @space-kit/redis-realtime-react
+npm i @space-kit/redis-realtime-node
 ```
 
 ## Usage
@@ -21,11 +21,9 @@ import App from './app'
 
 function Root() {
   return (
-    <Container>
-      <RealtimeProvider baseUrl="localhost:5000" db="todos" secure={false}>
-        <App />
-      </RealtimeProvider>
-    </Container>
+    <RealtimeProvider baseUrl="localhost:5000" db="mydb" secure={false}>
+      <App />
+    </RealtimeProvider>
   )
 }
 ```
@@ -66,9 +64,12 @@ function App() {
 
 ##### `Publisher` Parameters
 
-| Parameters | Description                                                     |
-| ---------- | --------------------------------------------------------------- |
-| `setDb`    | Similar to set json in redis it sets the value of publisher key |
+| Parameters      | Description                                                                           |
+| --------------- | ------------------------------------------------------------------------------------- |
+| `setDb`         | Similar to set json in redis it sets the value of publisher key                       |
+| `delDb`         | Similar to del json in redis it deletes the value of publisher key                    |
+| `arrayInsertDb` | Similar to arr insert in redis it inserts a new value to key array to index 0         |
+| `arrayPopDb`    | Similar to del arr pop in redis it pops the value from key array with an index and id |
 
 ##### `Subscriber` Parameters
 

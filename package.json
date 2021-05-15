@@ -4,7 +4,7 @@
   "workspaces": [
     "examples/realtime-be",
     "examples/realtime-fe",
-    "examples/redis-realtime-react",
-    "examples/redis-realtime-node"
+    "packages/redis-realtime-react",
+    "packages/redis-realtime-node"
   ]
 }

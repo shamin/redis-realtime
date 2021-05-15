@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --emptyOutDir",
     "serve": "vite preview",
     "lint": "eslint \"src/**/*.{ts,tsx,js}\" --max-warnings 0 --fix"
   },
@@ -20,8 +20,8 @@
     "draft-js": "^0.11.7",
     "framer-motion": "^4.1.2",
     "lodash": "^4.17.21",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -31,8 +31,8 @@
   },
   "devDependencies": {
     "@types/draft-js": "^0.11.2",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
+    "@types/react": "^17.0.5",
+    "@types/react-dom": "^17.0.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "4.19.0",
@@ -44,7 +44,7 @@
     "eslint-plugin-react": "7.23.1",
     "eslint-plugin-react-hooks": "4.2.0",
     "prettier": "2.2.1",
-    "typescript": "^4.1.2",
+    "typescript": "^4.2.3",
     "vite": "^2.1.5"
   }
 }
