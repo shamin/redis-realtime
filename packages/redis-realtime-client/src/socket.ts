@@ -35,6 +35,7 @@ export const useSocket = (
     ws.current.addEventListener('message', (e) => {
       onMessage(e.data)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

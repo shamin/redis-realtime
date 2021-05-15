@@ -6,7 +6,7 @@ type DbDataTypes =
   | 'DB_ARRAY_POP'
   | 'DB_DEL'
 
-interface DbData {
+export interface DbData {
   type: DbDataTypes
   id: string
   key: string

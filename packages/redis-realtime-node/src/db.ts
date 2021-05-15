@@ -1,5 +1,6 @@
 import { getJson, publish, setJson, subscribe } from './core/redis'
 import { delJson, insertArrayJSON, safePopArrayJSON } from './core/redis/json'
+import { DbData } from './types'
 
 export const subscribeToDb = (
   id: string,
@@ -59,6 +60,7 @@ export const createDbPathIfNotExists = async (
     if (await readDb(db, `${path}`)) {
       isExist = true
     }
+    // eslint-disable-next-line no-empty
   } catch (err) {}
 
   if (!isExist) {

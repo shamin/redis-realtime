@@ -79,6 +79,7 @@ export const RealtimeProvider = ({
 
   useEffect(() => {
     initialise()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dbState.connectionId, subscriptions])
 
   const publisher: Publish = (key: string) => ({
@@ -153,6 +154,7 @@ export const RealtimeProvider = ({
       state: dbState,
       subscribe,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [sendMessage]
   )
 

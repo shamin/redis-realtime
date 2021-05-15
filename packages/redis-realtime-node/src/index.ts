@@ -5,11 +5,11 @@ import { ConnectionDetails } from './core/socket/types'
 import {
   createDbPathIfNotExists,
   publishToDb,
-  readDb,
   readDbKeys,
   subscribeToDb,
 } from './db'
 import logger from './logger'
+import { DbData } from './types'
 
 const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) => {
   const sendJSON = (message: any) => {
@@ -30,6 +30,7 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
         let details = {}
         try {
           details = await readDbKeys(db, data.keys)
+          // eslint-disable-next-line no-empty
         } catch (err) {}
         sendJSON({
           type: 'DB_INITIALISE',
@@ -37,9 +38,7 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
           datas: details,
         })
       } else if (
-        ['DB_SET', 'DB_ARRAY_INSERT', 'DB_ARRAY_POP', 'DB_DEL'].includes(
-          data.type
-        )
+        ['DB_SET', 'DB_ARRAY_INSERT', 'DB_ARRAY_POP', 'DB_DEL'].includes(data.type)
       ) {
         try {
           await publishToDb(db, data)
