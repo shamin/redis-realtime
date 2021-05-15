@@ -5,7 +5,7 @@ Redis realtime react client
 ## Installation
 
 ```sh
-npm i @space-kit/redis-realtime-node
+npm i @space-kit/redis-realtime-react
 ```
 
 ## Usage
@@ -45,15 +45,13 @@ import { useRealtime } from '@space-kit/redis-realtime-react'
 function App() {
   const { publisher, subscribe } = useRealtime()
   const { setDb } = publisher('text')
-  const textValue = subscribe('text')
+  const { data = '', isLoading } = subscribe('text')
 
   const onChange = (e) => {
     setDb(e.target.value)
   }
 
-  return (
-    <input value={textValue} placeholder="Type something here" onChange={onChange} />
-  )
+  return <input value={data} placeholder="Type something here" onChange={onChange} />
 }
 ```
 
