@@ -1,5 +1,7 @@
 import * as http from 'http'
 import * as WebSocket from 'ws'
+import { initialiseRedisJsonClient } from './core/redis/json'
+import { initialiseRedisPubsubClients } from './core/redis/pubsub'
 import { connectClient, socketServer } from './core/socket'
 import { ConnectionDetails } from './core/socket/types'
 import {
@@ -54,7 +56,10 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
 
 socketServer.on('connection', serverConnectionCallback)
 
-const redisRealtime = (server: http.Server, db: string) => {
+const redisRealtime = (server: http.Server, url: string, db: string) => {
+  initialiseRedisPubsubClients(url)
+  initialiseRedisJsonClient(url)
+
   createDbPathIfNotExists(db).then(() => {})
   server.on('upgrade', async function (...args) {
     logger.debug(`New connection intiating`)

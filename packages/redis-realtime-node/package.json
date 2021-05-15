@@ -1,6 +1,6 @@
 {
   "name": "@space-kit/redis-realtime-node",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Nodejs sdk for implementing redis realtime",
   "keywords": [],
   "license": "MIT",
@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/shamin/redis-realtime/issues"
   },
-  "homepage": "https://github.com/shamin/redis-realtime#readme",
+  "homepage": "https://github.com/shamin/redis-realtime/tree/main/packages/redis-realtime-node#readme",
   "scripts": {
     "watch": "tsc --watch",
     "start": "npm run watch",

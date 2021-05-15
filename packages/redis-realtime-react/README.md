@@ -2,6 +2,8 @@
 
 Redis realtime react client
 
+![npm](https://img.shields.io/npm/v/@space-kit/redis-realtime-react)
+
 ## Installation
 
 ```sh

@@ -20,7 +20,7 @@ This project is a monorepo with the packages and a example and it uses npm works
 ### Prerequisites
 - Requires npm v7 or above.
 - Ideal nodejs version v14.8
-- Redis running at port 6379 with RedisJson Module. You can use this [docker-compose.yml](./examples/realtime-be/docker-compose.yml)
+- Redis running with RedisJson Module. You can use this [docker-compose.yml](./examples/realtime-be/docker-compose.yml)
 
 ### Run examples locally
 Install the dependencies

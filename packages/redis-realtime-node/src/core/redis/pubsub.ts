@@ -1,7 +1,9 @@
 import * as redis from 'redis'
 import { CallbackFunction } from './types'
 import { isEmpty, omit } from 'lodash'
-import { REDIS_SERVER_URL } from './config'
+import { RedisClient } from 'redis'
+
+let subscriber: RedisClient, publisher: RedisClient
 
 const connections: {
   [dbName: string]: {
@@ -9,8 +11,15 @@ const connections: {
   }
 } = {}
 
-const subscriber = redis.createClient(REDIS_SERVER_URL)
-const publisher = redis.createClient(REDIS_SERVER_URL)
+export const initialiseRedisPubsubClients = (url: string) => {
+  subscriber = redis.createClient(url)
+  publisher = redis.createClient(url)
+
+  subscriber.on('message', function (channel, message) {
+    const callbacks = connections[channel]
+    Object.values(callbacks).forEach((c) => c(message))
+  })
+}
 
 export const subscribe = (
   subscriptionName: string,
@@ -25,11 +34,6 @@ export const subscribe = (
     subscriber.subscribe(subscriptionName)
   }
 }
-
-subscriber.on('message', function (channel, message) {
-  const callbacks = connections[channel]
-  Object.values(callbacks).forEach((c) => c(message))
-})
 
 export const unsubscribe = (subscriptionName: string, subscriptionId: string) => {
   connections[subscriptionName] = omit(connections[subscriptionName], subscriptionId)
