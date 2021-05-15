@@ -1,11 +1,11 @@
-# redis-realtime-client
+# redis-realtime-react
 
 Redis realtime react client
 
 ## Installation
 
 ```sh
-npm install @shamin/redis-realtime-client
+npm install @space-kit/redis-realtime-react
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ Add the `RealtimeProvider` to the top level with db name and base url.
 
 ```jsx
 import React from 'react'
-import { RealtimeProvider } from '@shamin/redis-realtime-client'
+import { RealtimeProvider } from '@space-kit/redis-realtime-react'
 import App from './app'
 
 function Root() {
@@ -42,7 +42,7 @@ function Root() {
 
 ```jsx
 import React from 'react'
-import { useRealtime } from '@shamin/redis-realtime-client'
+import { useRealtime } from '@space-kit/redis-realtime-react'
 
 function App() {
   const { publisher, subscribe } = useRealtime()

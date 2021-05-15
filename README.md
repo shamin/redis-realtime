@@ -7,12 +7,12 @@ For now redis-realtime is a set of packages for react and node js that can be us
 ![Architecture](./images/architecture.png)
 
 ## Packages
-### redis-realtime-client
-This is a react package that help you to easily connect with the redis with the help redis-realtime-node package and update the database. More information on the package is available on its [readme](./packages/redis-realtime-client/README.md).
+### redis-realtime-react
+This is a react package that help you to easily connect with the redis with the help redis-realtime-node package and update the database. More information on the package is available on its [readme](./packages/redis-realtime-react/README.md).
 
 
 ### redis-realtime-nodejs
-This is the nodejs sdk that will be used my redis-realtime-client to communicate redis. More information on the package is available on its [readme](./packages/redis-realtime-client/README.md).
+This is the nodejs sdk that will be used my redis-realtime-react to communicate redis. More information on the package is available on its [readme](./packages/redis-realtime-node/README.md).
 
 ## Running Locally
 This project is a monorepo with the packages and a example and it uses npm workspaces to manage them locally.

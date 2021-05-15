@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { FcDocument } from 'react-icons/fc'
 import { RiArrowRightSLine } from 'react-icons/ri'
-import { useRealtime } from '@shamin/redis-realtime-client'
+import { useRealtime } from '@space-kit/redis-realtime-react'
 import NewDoc from '../components/newDoc'
 import { Link as RouterLink } from 'react-router-dom'
 import { getRelativeTime } from '../utils/dates'

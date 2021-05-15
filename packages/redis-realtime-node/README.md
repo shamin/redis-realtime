@@ -4,7 +4,7 @@ Redis realtime nodejs sdk
 
 ## Installation
 ```sh
-npm install @shamin/redis-realtime-node
+npm install @space-kit/redis-realtime-node
 ```
 
 ## Usage

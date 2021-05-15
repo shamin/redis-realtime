@@ -1,5 +1,5 @@
 {
-  "name": "@shamin/redis-realtime-node",
+  "name": "@space-kit/redis-realtime-node",
   "version": "0.0.1",
   "description": "Nodejs sdk for implementing redis realtime",
   "keywords": [],

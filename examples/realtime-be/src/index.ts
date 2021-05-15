@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import createApp from './core/app'
 import http from 'http'
-import redisRealtime from '@shamin/redis-realtime-node'
+import redisRealtime from '@space-kit/redis-realtime-node'
 
 dotenv.config()
 

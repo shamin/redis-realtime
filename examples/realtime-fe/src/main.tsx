@@ -1,7 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { RealtimeProvider } from '@shamin/redis-realtime-client'
+import { RealtimeProvider } from '@space-kit/redis-realtime-react'
 import './index.css'
 import Router from './router'
 

@@ -1,6 +1,6 @@
 import { Badge, Box, Center, Heading, HStack, Spacer } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
-import { useRealtime, CONNECTION_STATUS } from '@shamin/redis-realtime-client'
+import { useRealtime, CONNECTION_STATUS } from '@space-kit/redis-realtime-react'
 import { RawDraftContentState } from 'draft-js'
 import React from 'react'
 import { useParams } from 'react-router'

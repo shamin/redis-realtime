@@ -12,7 +12,7 @@ import {
   Input,
   ModalFooter,
 } from '@chakra-ui/react'
-import { useRealtime } from '@shamin/redis-realtime-client'
+import { useRealtime } from '@space-kit/redis-realtime-react'
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
