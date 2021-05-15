@@ -17,12 +17,7 @@ import { useRealtime } from '@shamin/redis-realtime-client'
 import NewDoc from '../components/newDoc'
 import { Link as RouterLink } from 'react-router-dom'
 import { getRelativeTime } from '../utils/dates'
-
-interface Document {
-  id: string
-  name: string
-  date: string
-}
+import { Document } from './types'
 
 function App() {
   const { subscribe, publisher } = useRealtime()

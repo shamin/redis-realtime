@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 interface NewDocProps {}
 
-const NewDoc: React.FC<NewDocProps> = (props: NewDocProps) => {
+const NewDoc: React.FC<NewDocProps> = () => {
   const [name, setName] = useState('')
   const { publisher } = useRealtime()
   const { arrayInsertDb } = publisher(`documents`)

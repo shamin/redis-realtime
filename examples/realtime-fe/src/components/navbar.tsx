@@ -5,7 +5,7 @@ import NewDoc from './newDoc'
 
 interface NavbarProps {}
 
-const Navbar: React.FC<NavbarProps> = (props: NavbarProps) => {
+const Navbar: React.FC<NavbarProps> = () => {
   return (
     <Flex
       w="100%"

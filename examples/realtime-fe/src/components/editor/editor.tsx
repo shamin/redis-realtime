@@ -32,7 +32,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   return (
     <Box>
-      <Box boxShadow="xs" p="6" rounded="md" bg="white" w="100%" mb={4}>
+      <Box boxShadow="xs" p="2" rounded="md" bg="white" w="100%" mb={4}>
         <BlockControls editorState={editorState} onToggle={onToggleBlock} />
         <InlineControls editorState={editorState} onToggle={onToggleInline} />
       </Box>

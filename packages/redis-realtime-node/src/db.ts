@@ -1,6 +1,5 @@
 import { getJson, publish, setJson, subscribe } from './core/redis'
 import { delJson, insertArrayJSON, safePopArrayJSON } from './core/redis/json'
-import logger from './logger'
 
 export const subscribeToDb = (
   id: string,
@@ -71,7 +70,7 @@ export const readDbKeys = (db: string, keys: string[]) => {
   return keys.reduce<any>(async (acc, key) => {
     const data = await readDb(db, key)
     return {
-      ...acc,
+      ...(await acc),
       [key]: JSON.parse(data),
     }
   }, {})

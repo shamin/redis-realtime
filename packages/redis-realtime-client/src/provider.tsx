@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react'
 import { dbReducer, DB_KEY_STATUS } from './db'
 import { useSocket } from './socket'
+import { ConnectionStatus } from './types'
 
 type Publish = <T extends unknown>(
   key: string
@@ -12,6 +13,7 @@ type Publish = <T extends unknown>(
 }
 
 interface RealtimeContextType {
+  connectionStatus: ConnectionStatus
   db: string
   publisher: Publish
   state: any
@@ -50,7 +52,7 @@ export const RealtimeProvider = ({
     dispatch(data)
   }
 
-  const { sendMessage } = useSocket(
+  const { sendMessage, status } = useSocket(
     `${secure ? 'wss' : 'ws'}://${baseUrl}/${db}`,
     onNewData,
     token
@@ -145,6 +147,7 @@ export const RealtimeProvider = ({
 
   const contextValue = React.useMemo(
     () => ({
+      connectionStatus: status,
       db,
       publisher,
       state: dbState,

@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import { Container } from '@chakra-ui/layout'
-import { css } from '@emotion/react'
 import {
   EditorState,
   convertToRaw,
@@ -29,6 +27,7 @@ const DocEditor: React.FC<DocProps> = ({ content, onChange }: DocProps) => {
         setEditorState(EditorState.createWithContent(convertFromRaw(content)))
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content])
 
   return (
