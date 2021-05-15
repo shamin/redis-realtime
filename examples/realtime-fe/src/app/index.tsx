@@ -29,6 +29,13 @@ function App() {
   const { data = [], isLoading } = subscribe<Document[]>(`documents`)
   const { arrayPopDb } = publisher<Document[]>('documents')
 
+  const deleteDoc = (id: string, index: number) => {
+    console.log('DElete', id, index)
+    arrayPopDb(id, index)
+    const { delDb } = publisher<Document[]>(`doc${id}`)
+    delDb()
+  }
+
   if (isLoading) {
     return (
       <Center>
@@ -60,7 +67,8 @@ function App() {
                 <Spacer />
                 <Button
                   onClick={() => {
-                    arrayPopDb(d.id, i)
+                    deleteDoc(d.id, i)
+                    // arrayPopDb(d.id, i)
                   }}
                 >
                   Delete

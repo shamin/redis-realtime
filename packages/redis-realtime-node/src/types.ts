@@ -4,7 +4,7 @@ type DbDataTypes =
   | 'DB_INITIALISE'
   | 'DB_ARRAY_INSERT'
   | 'DB_ARRAY_POP'
-  | 'DB_DELETE'
+  | 'DB_DEL'
 
 interface DbData {
   type: DbDataTypes

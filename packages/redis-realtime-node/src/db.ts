@@ -41,7 +41,7 @@ export const writeToDb = async (
       return
     case 'DB_SET':
       return setJson(db, `.${key}`, JSON.stringify(value))
-    case 'DB_DELETE':
+    case 'DB_DEL':
       return delJson(db, `.${key}`)
   }
 }
