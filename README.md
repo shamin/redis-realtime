@@ -1,6 +1,8 @@
 # Redis Realtime
 Build realtime services on top of redis
 
+A live demo of redis realtime is available [here](https://redis-realtime-demo.herokuapp.com/)
+
 ## What is Redis Realtime?
 For now redis-realtime is a set of packages for react and node js that can be used to build scalable realtime services on top of redis. 
 
