@@ -39,3 +39,8 @@ Start the frontend
 ```
 cd example/realtime-fe && npm run dev
 ```
+
+## Detailed Architecture
+Redis realtime packages detailed architecture.
+
+![Detailed Architecture](./images/detailed_architecture.png)
