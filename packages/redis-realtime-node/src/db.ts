@@ -1,5 +1,5 @@
 import { getJson, publish, setJson, subscribe } from './core/redis'
-import { insertArrayJSON } from './core/redis/json'
+import { delJson, insertArrayJSON, safePopArrayJSON } from './core/redis/json'
 import logger from './logger'
 
 export const subscribeToDb = (
@@ -29,10 +29,20 @@ export const writeToDb = async (
   console.log('Write', db, type, key, value)
   switch (type) {
     case 'DB_ARRAY_INSERT':
-      await createDbPathIfNotExists(db, key, '[]')
-      return insertArrayJSON(db, `.${key}`, 0, JSON.stringify(value))
+      if (value.id) {
+        await createDbPathIfNotExists(db, key, '[]')
+        return insertArrayJSON(db, `.${key}`, 0, JSON.stringify(value))
+      }
+      return
+    case 'DB_ARRAY_POP':
+      if (value.id !== null && value.index !== null) {
+        return safePopArrayJSON(db, key, value.id, value.index)
+      }
+      return
     case 'DB_SET':
       return setJson(db, `.${key}`, JSON.stringify(value))
+    case 'DB_DELETE':
+      return delJson(db, `.${key}`)
   }
 }
 

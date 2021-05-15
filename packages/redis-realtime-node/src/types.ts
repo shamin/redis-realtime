@@ -3,6 +3,8 @@ type DbDataTypes =
   | 'DB_SET'
   | 'DB_INITIALISE'
   | 'DB_ARRAY_INSERT'
+  | 'DB_ARRAY_POP'
+  | 'DB_DELETE'
 
 interface DbData {
   type: DbDataTypes

@@ -36,7 +36,11 @@ const serverConnectionCallback = (ws: WebSocket, { id, db }: ConnectionDetails) 
           keys: data.keys,
           datas: details,
         })
-      } else if (['DB_SET', 'DB_ARRAY_INSERT'].includes(data.type)) {
+      } else if (
+        ['DB_SET', 'DB_ARRAY_INSERT', 'DB_ARRAY_POP', 'DB_DEL'].includes(
+          data.type
+        )
+      ) {
         try {
           await publishToDb(db, data)
         } catch (err) {

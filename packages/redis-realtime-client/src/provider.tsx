@@ -6,7 +6,9 @@ type Publish = <T extends unknown>(
   key: string
 ) => {
   setDb: (data: T) => void
-  arrayInsertDb: (data: any) => void
+  delDb: () => void
+  arrayInsertDb: <E extends { id: string }>(data: E) => void
+  arrayPopDb: (id: string, index: number) => void
 }
 
 interface RealtimeContextType {
@@ -91,6 +93,17 @@ export const RealtimeProvider = ({
         data,
       })
     },
+    delDb: () => {
+      sendMessage({
+        type: 'DB_DEL',
+        key,
+        id: dbState.connectionId,
+      })
+      dispatch({
+        type: 'DB_DEL',
+        key,
+      })
+    },
     arrayInsertDb: (data) => {
       sendMessage({
         type: 'DB_ARRAY_INSERT',
@@ -102,6 +115,19 @@ export const RealtimeProvider = ({
         type: 'DB_ARRAY_INSERT',
         key,
         data,
+      })
+    },
+    arrayPopDb: (id: string, index: number) => {
+      sendMessage({
+        type: 'DB_ARRAY_POP',
+        key,
+        data: { id, index },
+        id: dbState.connectionId,
+      })
+      dispatch({
+        type: 'DB_ARRAY_POP',
+        key,
+        data: { id, index },
       })
     },
   })

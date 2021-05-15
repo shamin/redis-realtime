@@ -15,7 +15,7 @@ const Doc: React.FC<DocProps> = () => {
   const { data, isLoading } = subscribe<RawDraftContentState>(`doc${id}`)
 
   return (
-    <Box width={1200}>
+    <Box p="4" maxW={800} w="100%">
       {isLoading ? (
         <Center>
           <Spinner />

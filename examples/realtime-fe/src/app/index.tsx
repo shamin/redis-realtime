@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Container,
   HStack,
   Icon,
   VStack,
@@ -10,6 +9,7 @@ import {
   Link,
   Spacer,
   Box,
+  Button,
 } from '@chakra-ui/react'
 import { FcDocument } from 'react-icons/fc'
 import { RiArrowRightSLine } from 'react-icons/ri'
@@ -25,8 +25,10 @@ interface Document {
 }
 
 function App() {
-  const { subscribe } = useRealtime()
+  const { subscribe, publisher } = useRealtime()
   const { data = [], isLoading } = subscribe<Document[]>(`documents`)
+  const { arrayPopDb } = publisher<Document[]>('documents')
+
   if (isLoading) {
     return (
       <Center>
@@ -45,25 +47,27 @@ function App() {
         </Center>
       ) : (
         <VStack>
-          {data.map((d) => (
-            <Link
-              as={RouterLink}
-              key={d.id}
-              boxShadow="xs"
-              p="6"
-              rounded="md"
-              bg="white"
-              w="100%"
-              to={`/doc/${d.id}`}
-            >
+          {data.map((d, i) => (
+            <Box key={d.id} boxShadow="xs" p="6" rounded="md" bg="white" w="100%">
               <HStack>
-                <Icon as={FcDocument} w={10} h={10} />
-                <Text>{d.name}</Text>
+                <Link as={RouterLink} to={`/doc/${d.id}`}>
+                  <HStack>
+                    <Icon as={FcDocument} w={10} h={10} />
+                    <Text>{d.name}</Text>
+                    <Text>{getRelativeTime(d.date)}</Text>
+                  </HStack>
+                </Link>
                 <Spacer />
-                <Text>{getRelativeTime(d.date)}</Text>
+                <Button
+                  onClick={() => {
+                    arrayPopDb(d.id, i)
+                  }}
+                >
+                  Delete
+                </Button>
                 <Icon as={RiArrowRightSLine} w={5} h={5} />
               </HStack>
-            </Link>
+            </Box>
           ))}
         </VStack>
       )}

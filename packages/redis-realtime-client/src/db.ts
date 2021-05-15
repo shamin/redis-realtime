@@ -10,6 +10,11 @@ export function dbReducer(state: STATE, action: ACTION_TYPES) {
           data: action.data,
         },
       }
+    case 'DB_DEL':
+      return {
+        ...state,
+        [action.key]: undefined,
+      }
     case 'DB_INITIALISE': {
       const newState = { ...state }
       action.keys.forEach(
@@ -28,7 +33,18 @@ export function dbReducer(state: STATE, action: ACTION_TYPES) {
         ...state,
         [action.key]: {
           ...state[action.key],
-          data: [action.data, ...(state[action.key]?.data || [])]
+          data: [action.data, ...(state[action.key]?.data || [])],
+        },
+      }
+    case 'DB_ARRAY_POP':
+      console.log()
+      return {
+        ...state,
+        [action.key]: {
+          ...state[action.key],
+          data: state[action.key]?.data?.filter(
+            (d: any, i: number) => i !== action.data.index && d.id !== action.data.id
+          ),
         },
       }
     default:
@@ -52,6 +68,10 @@ export type ACTION_TYPES =
       data: any
     }
   | {
+      type: 'DB_DEL'
+      key: string
+    }
+  | {
       type: 'DB_INITIALISE'
       keys: string[]
       datas: any
@@ -64,6 +84,14 @@ export type ACTION_TYPES =
       type: 'DB_ARRAY_INSERT'
       key: string
       data: any
+    }
+  | {
+      type: 'DB_ARRAY_POP'
+      key: string
+      data: {
+        id: string
+        index: number
+      }
     }
 
 export const DB_KEY_STATUS = {
