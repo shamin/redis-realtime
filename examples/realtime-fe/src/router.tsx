@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/layout'
 import { Flex } from '@chakra-ui/react'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
@@ -16,12 +15,10 @@ const Router: React.FC = () => {
         alignItems="center"
       >
         <Navbar />
-        <div>
-          <Switch>
-            <Route path="/" exact component={App} />
-            <Route path="/doc/:id" exact component={Doc} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path="/" exact component={App} />
+          <Route path="/doc/:id" exact component={Doc} />
+        </Switch>
       </Flex>
     </BrowserRouter>
   )

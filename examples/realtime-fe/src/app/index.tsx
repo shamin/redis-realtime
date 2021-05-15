@@ -44,7 +44,7 @@ function App() {
     )
   }
   return (
-    <Box w={800}>
+    <Box p="4" maxW={800} w="100%">
       {data.length <= 0 ? (
         <Center mt={16}>
           <VStack spacing={4}>
@@ -57,18 +57,18 @@ function App() {
           {data.map((d, i) => (
             <Box key={d.id} boxShadow="xs" p="6" rounded="md" bg="white" w="100%">
               <HStack>
-                <Link as={RouterLink} to={`/doc/${d.id}`}>
+                <Link as={RouterLink} to={`/doc/${d.id}`} w="100%">
                   <HStack>
                     <Icon as={FcDocument} w={10} h={10} />
                     <Text>{d.name}</Text>
-                    <Text>{getRelativeTime(d.date)}</Text>
+                    <Spacer />
+                    <Text color="gray.400">{getRelativeTime(d.date)}</Text>
                   </HStack>
                 </Link>
                 <Spacer />
                 <Button
                   onClick={() => {
                     deleteDoc(d.id, i)
-                    // arrayPopDb(d.id, i)
                   }}
                 >
                   Delete

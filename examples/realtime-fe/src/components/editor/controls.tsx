@@ -2,6 +2,7 @@ import React from 'react'
 import { EditorState, DraftBlockType } from 'draft-js'
 import EditorButton from './button'
 import { HStack } from '@chakra-ui/layout'
+import { Stack } from '@chakra-ui/react'
 
 interface ControlsProps {
   editorState: EditorState
@@ -15,9 +16,9 @@ const BLOCK_TYPES = [
   { label: 'H4', style: 'header-four' },
   { label: 'H5', style: 'header-five' },
   { label: 'H6', style: 'header-six' },
-  { label: 'Blockquote', style: 'blockquote' },
   { label: 'UL', style: 'unordered-list-item' },
   { label: 'OL', style: 'ordered-list-item' },
+  { label: 'Blockquote', style: 'blockquote' },
   { label: 'Code Block', style: 'code-block' },
 ]
 
@@ -32,7 +33,7 @@ export const BlockControls: React.FC<ControlsProps> = ({
     .getType()
 
   return (
-    <HStack spacing={0}>
+    <Stack direction={['column', 'row']} spacing={0}>
       {BLOCK_TYPES.map((type) => (
         <EditorButton
           key={type.label}
@@ -42,7 +43,7 @@ export const BlockControls: React.FC<ControlsProps> = ({
           style={type.style}
         />
       ))}
-    </HStack>
+    </Stack>
   )
 }
 
@@ -59,7 +60,7 @@ export const InlineControls: React.FC<ControlsProps> = ({
 }: ControlsProps) => {
   const currentStyle = editorState.getCurrentInlineStyle()
   return (
-    <HStack spacing={0}>
+    <Stack direction={['column', 'row']} spacing={0}>
       {INLINE_STYLES.map((type) => (
         <EditorButton
           key={type.label}
@@ -69,6 +70,6 @@ export const InlineControls: React.FC<ControlsProps> = ({
           style={type.style}
         />
       ))}
-    </HStack>
+    </Stack>
   )
 }
