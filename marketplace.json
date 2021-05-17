@@ -1,0 +1,23 @@
+{
+    "app_name": "Redis Realtime",
+    "description": "Build realtime applications on top of redis",
+    "hidden": "false",
+    "rank": "",
+    "type": "Building Block",
+    "contributed_by": "",
+    "repo_url": "https://github.com/shamin/redis-realtime",
+    "download_url": "https://github.com/shamin/redis-realtime/archive/refs/heads/main.zip",
+    "hosted_url": "",
+    "quick_deploy": "",
+    "deploy_buttons": [],
+    "language": ["Typescript"],
+    "redis_commands": ["JSON.GET", "JSON.SET", "JSON.DEL", "JSON.ARRINSERT", "JSON.ARRINDEX", "JSON.ARRPOP", "SUBSCRIBE", "PUBLISH"],
+    "redis_features": ["json", "pubsub"],
+    "redis_modules": ["RediJSON"],
+    "app_image_urls": [
+    "https://raw.githubusercontent.com/shamin/redis-realtime/main/images/thumbnail.png"],
+    "youtube_url": "https://youtu.be/2Ez0Sg-QyEw",
+    "special_tags": ["Hackathon"],
+    "verticals": [],
+    "markdown": "https://raw.githubusercontent.com/shamin/redis-realtime/main/README.md",
+}
