@@ -30,6 +30,12 @@ Install the dependencies
 npm install
 ```
 
+Now you have to build the packages.
+```sh
+npm --prefix packages/redis-realtime-node run build
+npm --prefix packages/redis-realtime-react run build
+```
+
 Start the backend server
 ```
 cd example/realtime-be && npm start
